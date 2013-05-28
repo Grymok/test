@@ -10,7 +10,7 @@
              ">
     <Grid >
 
-        <Grid x:Name="MailGrid" Margin="2,0,-2,0">
+        <Grid x:Name="MailGrid" Margin="1,0,-1,0">
             <Grid.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FF00AEFF" Offset="0"/>
@@ -24,7 +24,7 @@
 
             </Grid.RowDefinitions>
 
-            <ToolBar Grid.Row="0"  ToolBarTray.IsLocked="True" IsEnabled="{Binding IsToolbarAvailable}">
+            <ToolBar Grid.Row="0"  ToolBarTray.IsLocked="True" IsEnabled="{Binding IsToolbarAvailable}" Margin="-3,0,3,0">
 
                 <Button x:Name="back_button" Margin="0,0,0,0.4" VerticalAlignment="Bottom" Click="back_button_Click">
                     <StackPanel Orientation="Horizontal">
@@ -78,14 +78,14 @@
 
         </Grid>
 
-        <Grid x:Name="LoginGrid" Width="500" Height="400"  
-               FocusManager.FocusedElement="{Binding ElementName=hostTextBox}" Margin="253,157,237,153">
-            <Border BorderThickness="0,0,5,5" BorderBrush="Black"  CornerRadius="15" Background="#FF0E779E" Margin="14,-4,-18,4">
+        <Grid x:Name="LoginGrid"  
+               FocusManager.FocusedElement="{Binding ElementName=hostTextBox}" Margin="231,160,219,110">
+            <Border BorderThickness="0,0,5,5" BorderBrush="Black"  CornerRadius="15" Background="#FF0E779E" Margin="10,-10,-14,10">
                 <Border.Effect>
                     <DropShadowEffect />
                 </Border.Effect>
                 <StackPanel Margin="-5,-5,5,5.2">
-                    <StackPanel >
+                    <StackPanel Margin="6,0,-6,0" >
                         <StackPanel.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FF0E779E" Offset="0.865"/>
@@ -125,7 +125,7 @@
                                 <DropShadowEffect/>
                             </Button.Effect>
                         </Button>
-                        <Button  Width="100" Margin="5" >
+                        <Button x:Name="cancel"  Width="100" Margin="5" Click="cancel_Click" >
                             <Button.Effect>
                                 <DropShadowEffect/>
                             </Button.Effect> Cancel

@@ -79,6 +79,11 @@ namespace MailClient.Forms.SendMail
             Switcher.Switch(new MyMainMenu());
         }
 
+        private void cancel_Click(object sender, RoutedEventArgs e)
+        {
+            Switcher.Switch(new MyMainMenu());
+        }
+
         
 
         
