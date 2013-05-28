@@ -1,0 +1,230 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PopClient</name>
+    </assembly>
+    <members>
+        <member name="T:Extra.Mail.AttachmentExtensions">
+            <summary>
+            Adds some functionality to the Attachment class
+            </summary>
+        </member>
+        <member name="T:Extra.Mail.CDOMessageConverter">
+            <summary>
+            This class is used to convert a CDO message instance to a MailMessage object
+            as well as exposing properties not present in MailMessage.
+            </summary>
+        </member>
+        <member name="M:Extra.Mail.MailPopCompletedEventArgs.#ctor">
+            <summary>
+            Instantiates a new instance of the MailPopCompletedEventArgs class
+            </summary>
+        </member>
+        <member name="M:Extra.Mail.MailPopCompletedEventArgs.#ctor(System.Exception)">
+            <summary>
+            Instantiates a new instance of the MailPopCompletedEventArgs class
+            </summary>
+            <param name="ex">Any exception that was thrown during the asynchronous fetch</param>
+        </member>
+        <member name="P:Extra.Mail.MailPopCompletedEventArgs.Exception">
+            <summary>
+            Gets any exception that was thrown during the asynchronous fetch
+            </summary>
+        </member>
+        <member name="P:Extra.Mail.MailPopCompletedEventArgs.Aborted">
+            <summary>
+            Gets a value indicating whether the fetch operation was aborted
+            </summary>
+        </member>
+        <member name="M:Extra.Mail.MailPoppedEventArgs.#ctor(System.Int32,System.Net.Mail.MailMessage,System.Int32,System.String,System.DateTime)">
+            <summary>
+            Instantiates a new instance of the MailPoppedEventArgs class
+            </summary>
+            <param name="index">The index of the message</param>
+            <param name="message">A MailMessage that contains the fetched message</param>
+            <param name="size">The size of the mail</param>
+            <param name="uidl">The uidl value of the message</param>
+            <param name="receivedTime">Time when the message was received by the server</param>
+        </member>
+        <member name="P:Extra.Mail.MailPoppedEventArgs.Index">
+            <summary>
+            Gets the index of the message
+            </summary>
+        </member>
+        <member name="P:Extra.Mail.MailPoppedEventArgs.Size">
+            <summary>
+            Gets the size of the mail
+            </summary>
+        </member>
+        <member name="P:Extra.Mail.MailPoppedEventArgs.Uidl">
+            <summary>
+            Gets the uidl value of the message
+            </summary>
+        </member>
+        <member name="P:Extra.Mail.MailPoppedEventArgs.Message">
+            <summary>
+            Gets the MailMessage that contains the fetched message
+            </summary>
+        </member>
+        <member name="P:Extra.Mail.MailPoppedEventArgs.ReceivedTime">
+            <summary>
+            Gets the time when the message was received by the server
+            </summary>
+        </member>
+        <member name="M:Extra.Mail.PopClient.#ctor(System.String,System.Int32)">
+            <summary>
+            Initializes a new instance of the PopClient class.
+            </summary>
+            <param name="host">The name or IP address of the host server</param>
+            <param name="port">The port to be used</param>
+        </member>
+        <member name="M:Extra.Mail.PopClient.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the PopClient class.
+            </summary>
+            <param name="host">The name or IP address of the host server</param>
+        </member>
+        <member name="M:Extra.Mail.PopClient.#ctor">
+            <summary>
+            Initializes a new instance of the PopClient class.
+            </summary>
+        </member>
+        <member name="M:Extra.Mail.PopClient.Dispose">
+            <summary>
+            Releases all resources used by the PopClient class.
+            </summary>
+        </member>
+        <member name="M:Extra.Mail.PopClient.PopMail">
+            <summary>
+            Begins an asynchronous fetch operation
+            </summary>
+        </member>
+        <member name="M:Extra.Mail.PopClient.Cancel">
+            <summary>
+            Cancels the asynchronous fetch operation
+            </summary>
+        </member>
+        <member name="M:Extra.Mail.PopClient.IsWorking">
+            <summary>
+            Indicates whether a fetch operation is under way
+            </summary>
+            <returns>True if a fetch is on, False otherwise</returns>
+        </member>
+        <member name="P:Extra.Mail.PopClient.Host">
+            <summary>
+            Gets or sets the name or IP address of the POP3 host
+            </summary>
+        </member>
+        <member name="P:Extra.Mail.PopClient.Port">
+            <summary>
+            Gets or sets the port used for the POP3 connection
+            </summary>
+        </member>
+        <member name="P:Extra.Mail.PopClient.Username">
+            <summary>
+            Gets or sets the POP3 username
+            </summary>
+        </member>
+        <member name="P:Extra.Mail.PopClient.Password">
+            <summary>
+            Gets or sets the POP3 password
+            </summary>
+        </member>
+        <member name="P:Extra.Mail.PopClient.EnableSsl">
+            <summary>
+            Specify whether the PopClient uses a Secure Sockets Layer connection
+            </summary>
+        </member>
+        <member name="P:Extra.Mail.PopClient.DeleteMailAfterPop">
+            <summary>
+            Specify whether email is deleted after fetch
+            </summary>
+        </member>
+        <member name="P:Extra.Mail.PopClient.Timeout">
+            <summary>
+            Gets or sets a value that specifies the amount of time after the connection times out.
+            </summary>
+        </member>
+        <member name="E:Extra.Mail.PopClient.MailPopCompleted">
+            <summary>
+            Occurs when the asynchronous fetch completes
+            </summary>
+        </member>
+        <member name="E:Extra.Mail.PopClient.MailPopped">
+            <summary>
+            Occurs when a mail is fetched
+            </summary>
+        </member>
+        <member name="E:Extra.Mail.PopClient.QueryPopInfoCompleted">
+            <summary>
+            Occurs when summary info for the fetch operation is available
+            </summary>
+        </member>
+        <member name="E:Extra.Mail.PopClient.ChatCommandLog">
+            <summary>
+            Occurs when a POP3 command is sent to the server
+            </summary>
+        </member>
+        <member name="E:Extra.Mail.PopClient.ChatResponseLog">
+            <summary>
+            Occurs when a POP3 response is received from the server
+            </summary>
+        </member>
+        <member name="M:Extra.Mail.PopClientLogEventArgs.#ctor(System.String)">
+            <summary>
+            Instantiates a new instance of the PopClientLogEventArgs class
+            </summary>
+            <param name="line">A string representing a message log line</param>
+        </member>
+        <member name="P:Extra.Mail.PopClientLogEventArgs.Line">
+            <summary>
+            Gets a string representing a message log line
+            </summary>
+        </member>
+        <member name="M:Extra.Mail.PopClientException.#ctor">
+            <summary>
+            Initializes a new instance of the PopClientException class.
+            </summary>
+        </member>
+        <member name="M:Extra.Mail.PopClientException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the PopClientException class.
+            </summary>
+            <param name="message">The message that describes the error</param>
+        </member>
+        <member name="M:Extra.Mail.PopClientException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the PopClientException class.
+            </summary>
+            <param name="info">The object that holds the serialized object data</param>
+            <param name="context">The contextual information about the source or destination</param>
+        </member>
+        <member name="P:Extra.Mail.PopClientException.PopClientBusy">
+            <summary>
+            Gets a value indicating whether the PopClient is busy.
+            </summary>
+        </member>
+        <member name="P:Extra.Mail.PopClientException.PopClientUserCancelled">
+            <summary>
+            Gets a value indicating whether the fetch operation was cancelled by the user.
+            </summary>
+        </member>
+        <member name="M:Extra.Mail.MailPopInfoFetchedEventArgs.#ctor(System.Int32,System.Int32)">
+            <summary>
+             Instantiates a new instance of the MailPopInfoFetchedEventArgs class
+            </summary>
+            <param name="count">The number of messages</param>
+            <param name="size">Total size of all messages</param>
+        </member>
+        <member name="P:Extra.Mail.MailPopInfoFetchedEventArgs.Count">
+            <summary>
+            Get the number of messages
+            </summary>
+        </member>
+        <member name="P:Extra.Mail.MailPopInfoFetchedEventArgs.Size">
+            <summary>
+            Gets the total size of all messages
+            </summary>
+        </member>
+    </members>
+</doc>

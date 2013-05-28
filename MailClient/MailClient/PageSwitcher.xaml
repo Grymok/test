@@ -1,0 +1,9 @@
+﻿<Window x:Class="MailClient.PageSwitcher"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MailClient" WindowStartupLocation="CenterScreen" Height="710" Width="990">
+    <Grid>
+        
+        
+    </Grid>
+</Window>

@@ -1,0 +1,30 @@
+﻿<Window x:Class="MailClient.Forms.POP3Indbakke.LogWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Log Window" Height="730" Width="630">
+    <DockPanel>
+        <ListBox ItemsSource="{Binding}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Margin="0,2,0,2">
+                        <Image Width="24">
+                            <Image.Style>
+                                <Style TargetType="{x:Type Image}">
+                                    <Setter Property="Source" Value="C:\Users\JAcob\Documents\GitHub\Programmering\MailClient\MailClient\Forms\POP3Indbakke\Icons\GreenUpArrow.png" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Response}" Value="True" >
+                                            <Setter Property="Source" Value="C:\Users\JAcob\Documents\GitHub\Programmering\MailClient\MailClient\Forms\POP3Indbakke\Icons\BlueDownArrow.png"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                        <Grid Margin="5,0,0,0">
+                            <TextBlock Text="{Binding Line}" />
+                        </Grid>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </DockPanel>
+</Window>
