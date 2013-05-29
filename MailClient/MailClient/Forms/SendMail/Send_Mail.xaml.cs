@@ -39,10 +39,11 @@ namespace MailClient.Forms.SendMail
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
+            Settings.Default.userpassword=PasswordBoxPOP1.Password ;
             LoginGrid.Visibility = Visibility.Collapsed;
             {
-                var passwordBox = PasswordBoxPOP1 as PasswordBox;
-                var password = passwordBox.Password;
+
+                
             }
 
 

@@ -53,5 +53,10 @@ namespace MailClient.Forms
         {
             Switcher.Switch(new MailClient.Forms.POP3Indbakke.MainWindow());
         }
+
+        private void GoToOpenPopSide_Click(object sender, RoutedEventArgs e)
+        {
+            Switcher.Switch(new MailClient.Forms.Openpop.OpenPopSide());
+        }
         }
 }

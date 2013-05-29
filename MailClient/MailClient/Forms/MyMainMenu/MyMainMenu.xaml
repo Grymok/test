@@ -67,6 +67,11 @@
             </Button.Effect>
         </Button>
         <Image HorizontalAlignment="Left" Height="283" Margin="692,23,-129,0" VerticalAlignment="Top" Width="427" Source="/MailClient;component/Forms/POP3Indbakke/Icons/mail.png"/>
+        <Button x:Name="GoToOpenPopSide" Content="OpenPop indbakke" HorizontalAlignment="Left" Margin="29,248,0,0" VerticalAlignment="Top" Width="230" FontSize="22" Click="GoToOpenPopSide_Click">
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+        </Button>
 
     </Grid>
 </UserControl>

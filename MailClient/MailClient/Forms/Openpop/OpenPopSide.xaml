@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="MailClient.Forms.Openpop.OpenPopSide"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="710" d:DesignWidth="990">
+    <Grid>
+        <ToolBar Grid.Row="0"  ToolBarTray.IsLocked="True" IsEnabled="{Binding IsToolbarAvailable}" Margin="10,10,10,660">
+
+            <Button x:Name="back_button" Margin="0,0,0,0.4" VerticalAlignment="Bottom" Click="back_button_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Width="32">
+
+                    </Image>
+                    <TextBlock VerticalAlignment="Center"> Back to main menu</TextBlock>
+                </StackPanel>
+            </Button>
+            <Button x:Name="ReciveMailbtn" Margin="0,0,0,0.4" VerticalAlignment="Bottom" Click="ReciveMailbtn_Click">
+                <StackPanel  Orientation="Horizontal">
+                    <Image Width="32" Source="/MailClient;component/Forms/POP3Indbakke/Icons/ip_icon_03_MailSend.png">
+
+                    </Image>
+                    <TextBlock VerticalAlignment="Center"> Recieve</TextBlock>
+                </StackPanel>
+            </Button>
+        </ToolBar>
+        <ListBox x:Name="Subjectlsbx" HorizontalAlignment="Left" Height="512" Margin="10,86,0,0" VerticalAlignment="Top" Width="179"/>
+        <ProgressBar x:Name="pgBarMailFetched" HorizontalAlignment="Left" Height="12" Margin="248,656,0,0" VerticalAlignment="Top" Width="614" RenderTransformOrigin="0.5,0.5">
+            <ProgressBar.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="-1"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </ProgressBar.RenderTransform>
+        </ProgressBar>
+        <TextBox x:Name="msgcounglb" HorizontalAlignment="Left" Height="23" Margin="34,622,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="msgBodytbx" HorizontalAlignment="Left" Height="512" Margin="194,86,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="580"/>
+
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF00AEFF" Offset="0"/>
+                <GradientStop Color="#FF0E779E" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+
+
+    </Grid>
+</UserControl>
