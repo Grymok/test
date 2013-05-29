@@ -75,7 +75,6 @@
             <Label Content="Modtager" HorizontalAlignment="Left" Margin="282,129,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="22"/>
             <Label Content="Emne" HorizontalAlignment="Left" Margin="282,168,0,0" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="-0.737,-1.077" FontSize="22"/>
             <Label Content="Besked" HorizontalAlignment="Left" Margin="282,207,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="22"/>
-            <TextBox x:Name="texttest" HorizontalAlignment="Left" Height="23" Margin="59,391,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
 
         </Grid>
 
