@@ -22,6 +22,7 @@ using OpenPop.Mime.Header;
 using OpenPop.Pop3;
 using System.IO;
 using System.Data.SQLite;
+using System.Diagnostics;
 
 namespace MailClient.Forms.Openpop
 {
@@ -30,17 +31,24 @@ namespace MailClient.Forms.Openpop
     /// </summary>
     public partial class OpenPopSide : UserControl
     {
+        SqlDbHandler SqlDbHandler = new SqlDbHandler();
+        SQLiteConnection sqliteCon;
+       
        List<OpenPop.Mime.Message> list;
-
+       
         private BackgroundWorker worker;
         
         public OpenPopSide()
         
         {
-            InitializeComponent();
-            //Subjectlsbx
             
+            InitializeComponent();
+            sqliteCon = SqlDbHandler.sqliteCon;
+            SqlDbHandler.CreateDB();
+            updatDB();      
+                          
             list = new List<OpenPop.Mime.Message>();
+
 
             worker = new BackgroundWorker();
 
@@ -55,26 +63,22 @@ namespace MailClient.Forms.Openpop
         {
             int percentComplete;
 
-            // The client disconnects from the server when being disposed
+            
             using (Pop3Client client = new Pop3Client())
             {
-                // Connect to the server
-                //client.Connect("pop.gmail.com", 995, true);
+               
                 client.Connect("pop.gmail.com", 995, true);
 
-                // Authenticate ourselves towards the server
+               
                 client.Authenticate("programmering3@gmail.com", "programmering");
 
-                // Get the number of messages in the inbox
+                
                 int messageCount = client.GetMessageCount();
 
-                // We want to download all messages
+               
                 List<OpenPop.Mime.Message> allMessages = new List<OpenPop.Mime.Message>(messageCount);
 
-                // Messages are numbered in the interval: [1, messageCount]
-                // Ergo: message numbers are 1-based.
-                // Most servers give the latest message the highest number
-
+                
                 for (int i = messageCount; i > 0; i--)
                 {
                     allMessages.Add(client.GetMessage(i));
@@ -82,7 +86,6 @@ namespace MailClient.Forms.Openpop
                     (sender as BackgroundWorker).ReportProgress(percentComplete);
                 }
 
-                // Now return the fetched messages
                 e.Result = allMessages;
             }
         }
@@ -99,19 +102,22 @@ namespace MailClient.Forms.Openpop
             {
                 SQLiteConnection sqliteCon = new SQLiteConnection(@"Data Source = messages.db;");
                 SQLiteTransaction sqlTrans;
-               
+                sqliteCon.Open();
 
-                SQLiteCommand commandInsert = new SQLiteCommand("INSERT OR IGNORE INTO messages (msgID, msgSender, msgSubject, msgBody) VALUES (@msgID, @msgSender, @msgSubject, @msgBody)", sqliteCon);
+
+
+                SQLiteCommand commandInsert = new SQLiteCommand("INSERT OR IGNORE INTO messages (msgID, msgSender, msgSubject, msgBody) VALUES ( @msgID, @msgSender, @msgSubject, @msgBody)", sqliteCon);
                // SQLiteCommand commandCount = new SQLiteCommand("SELECT COUNT(*) FROM messages", sqliteConn);
 
-                sqliteCon.Open();
+                /*
 
                 string crtMessagetblSQL = "CREATE TABLE IF NOT EXISTS [Messages] (" +
                             "[msgID] TEXT NOT NULL PRIMARY KEY," +
                             "[msgSender] TEXT NULL," +
                             "[msgSubject] TEXT NULL," +
-                            "[msgBody] TEXT NULL" +
-                            ")";
+                            "[msgBody] TEXT NULL)";
+                           // "[msgIndex] INTEGER )";
+                          
                 using (SQLiteTransaction sqlTrans1 = sqliteCon.BeginTransaction())
                 {
                     SQLiteCommand crtComm = new SQLiteCommand(crtMessagetblSQL, sqliteCon);
@@ -121,10 +127,10 @@ namespace MailClient.Forms.Openpop
 
                     sqlTrans1.Commit(); // Commit changes into the DB
                 } 
-
+                */
                 msgcounglb.Text = Convert.ToString(list.Count);
 
-                Subjectlsbx.Items.Clear();
+              //  Subjectlsbx.Items.Clear();
                 //int i = Convert.ToInt32(commandCount.ExecuteScalar());
                 foreach (OpenPop.Mime.Message message in list)
                 {
@@ -142,21 +148,35 @@ namespace MailClient.Forms.Openpop
                             OpenPop.Mime.MessagePart plainText = message.FindFirstPlainTextVersion();
                             commandInsert.Parameters.AddWithValue("@msgBody", plainText.GetBodyAsText());
                         }
+
+                       // SQLiteCommand cmdFindIndex = new SQLiteCommand("SELECT MAX(msgIndex) from messages", sqliteCon);
+                       // object anObj = cmdFindIndex.ExecuteScalar();
+
+                        //int maxIndex = (anObj == null ? -1 : Convert.ToInt32(anObj.ToString()));
+                       
+                       // maxIndex++;
+                       // commandInsert.Parameters.AddWithValue("@msgIndex", maxIndex);
                         
                         sqlTrans = sqliteCon.BeginTransaction();
-                        SQLiteCommand crtComm = new SQLiteCommand(crtMessagetblSQL, sqliteCon);
+                       // SQLiteCommand crtComm = new SQLiteCommand(crtMessagetblSQL, sqliteCon);
                         int result = commandInsert.ExecuteNonQuery();
                         sqlTrans.Commit();
+                        updatDB();
 
-                        Subjectlsbx.Items.Add(message.Headers.Subject.ToString());
+                       // Subjectlsbx.Items.Add(message.Headers.Subject.ToString());
                     }
                     
                 }
+                
             }
             catch (SQLiteException r)
             {
                 MessageBox.Show(r.ToString());
             } // End catch
+
+
+
+
 
         }
 
@@ -175,10 +195,82 @@ namespace MailClient.Forms.Openpop
 
         }
 
-        private void Subjectlsbx_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Subjectname_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        { 
+            SQLiteConnection sqliteCon = new SQLiteConnection(@"Data Source = messages.db;");
+           
+            sqliteCon.Open();
+            List<Msg> dbmsg = new List<Msg>();
+            SQLiteCommand cmdRead = new SQLiteCommand("SELECT * FROM Messages", sqliteCon);
+            SQLiteDataReader reader = cmdRead.ExecuteReader();
+            //try
+            //{
+            while (reader.Read())
+            {
+                string msgID = reader.GetString(0);
+                string msgSender = reader.GetString(1);
+                string msgSubject = reader.GetString(2);
+                string msgBody = reader.GetString(3);
+                dbmsg.Add(new Msg() { MsgID = msgID, MsgSender = msgSender, MsgSubject = msgSubject, MsgBody = msgBody });
+            }
+           
+            int selectedItem = Subjectname.SelectedIndex;
+            msgBodytbx.Text = dbmsg[selectedItem].MsgBody;
+
+        }
+
+        public void updatDB()
+        {
+            Subjectname.Items.Clear();
+            try
+            {
+
+                SQLiteConnection sqliteCon = new SQLiteConnection(@"Data Source = messages.db;");
+
+                sqliteCon.Open();
+                List<Msg> dbmsg = new List<Msg>();
+                SQLiteCommand cmdRead = new SQLiteCommand("SELECT * FROM Messages ", sqliteCon);
+                SQLiteDataReader reader = cmdRead.ExecuteReader();
+                //try
+                //{
+                while (reader.Read())
+                {
+                    string msgID = reader.GetString(0);
+                    string msgSender = reader.GetString(1);
+                    string msgSubject = reader.GetString(2);
+                    string msgBody = reader.GetString(3);
+                    dbmsg.Add(new Msg() { MsgID = msgID, MsgSender = msgSender, MsgSubject = msgSubject, MsgBody = msgBody });
+                }
+
+
+
+                foreach (Msg msg in dbmsg)
+                {
+                    ADD_NEW_DATA data = new ADD_NEW_DATA(msg.MsgSubject, msg.MsgID, "Data3");
+                    Subjectname.Items.Add(data);
+                    //Subjectname.Items.Add(msg.MsgSubject);
+
+                    // sercetBox.Items.Add(msg.MsgID);
+                }
+                sqliteCon.Close();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Exception");
+                Debug.WriteLine(ex.Message);
+            }
+
+        }
+
+
+       /* private void Subjectlsbx_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             {
-                int selectedItem = Subjectlsbx.SelectedIndex;
+              
+                
+              // msgBodytbx.Text = 
+               // msgBodytbx.Text =  
+                /*
                 if (!list[selectedItem].MessagePart.IsMultiPart)
                 {
                     msgBodytbx.Text = list[selectedItem].MessagePart.GetBodyAsText();
@@ -188,8 +280,19 @@ namespace MailClient.Forms.Openpop
                     OpenPop.Mime.MessagePart plainText = list[selectedItem].FindFirstPlainTextVersion();
                     msgBodytbx.Text = plainText.GetBodyAsText();
                 }
+                  
             }
+    
         }
+*/
+        
+
+
+       
+
+        
+
+        
 
         
        }

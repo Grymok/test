@@ -41,13 +41,7 @@ namespace MailClient.Forms.SendMail
         {
             Settings.Default.userpassword=PasswordBoxPOP1.Password ;
             LoginGrid.Visibility = Visibility.Collapsed;
-            {
-
-                
-            }
-
-
-
+           
         }
 
         private void sendmail_button_Click(object sender, RoutedEventArgs e)

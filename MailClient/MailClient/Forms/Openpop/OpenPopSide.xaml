@@ -33,13 +33,6 @@
                 </StackPanel>
             </Button>
         </ToolBar>
-        <ListBox x:Name="Subjectlsbx" HorizontalAlignment="Left" Height="512" Margin="10,86,0,0" VerticalAlignment="Top" Width="179" SelectionChanged="Subjectlsbx_SelectionChanged" 
-                 >
-            
-            <ListBox.Effect>
-                <DropShadowEffect/>
-            </ListBox.Effect>
-                   </ListBox>
         <ProgressBar x:Name="pgBarMailFetched" HorizontalAlignment="Left" Height="14" Margin="221,621,0,0" VerticalAlignment="Top" Width="575" RenderTransformOrigin="0.5,0.5">
             <ProgressBar.Effect>
                 <DropShadowEffect Direction="415"/>
@@ -53,12 +46,22 @@
                 </TransformGroup>
             </ProgressBar.RenderTransform>
         </ProgressBar>
-        <TextBox x:Name="msgcounglb" HorizontalAlignment="Left" Height="23" Margin="10,616,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="179"/>
-        <TextBox x:Name="msgBodytbx" HorizontalAlignment="Left" Height="512" Margin="219,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="580">
+        <TextBox x:Name="msgcounglb" HorizontalAlignment="Left" Height="23" Margin="104,616,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="85"/>
+        <TextBox x:Name="msgBodytbx" HorizontalAlignment="Left" Height="512" Margin="219,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="580" >
             <TextBox.Effect>
                 <DropShadowEffect/>
             </TextBox.Effect>
         </TextBox>
+        <ListView x:Name="Subjectname" HorizontalAlignment="Left" Height="512" Margin="10,86,0,0" VerticalAlignment="Top" Width="179" SelectionChanged="Subjectname_SelectionChanged" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="179" Header="Subject" DisplayMemberBinding="{Binding Path=Column_1}" />
+                    <GridViewColumn Width="140" Header="MsgID" DisplayMemberBinding="{Binding Path=Column_2}" />
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Label Content="Antal ny mails" HorizontalAlignment="Left" Margin="10,616,0,0" VerticalAlignment="Top" Height="34" Width="89"/>
 
 
 
